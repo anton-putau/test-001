@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WingsOn.Api.Contracts;
+using WingsOn.Api.Contracts.Converters;
+using WingsOn.Api.Services;
 
 namespace WingsOn.Api.Controllers
 {
@@ -11,10 +10,24 @@ namespace WingsOn.Api.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        [HttpGet("{id}")]
-        public ActionResult<Person> GetPerson(int id)
+        private readonly PersonService _personService;
+        private readonly IEntityConverter<Domain.Person, Contracts.Person> _personConverter;
+
+
+        public PersonController(
+            PersonService personService, 
+            IEntityConverter<Domain.Person, Contracts.Person> personConverter)
         {
-            throw new NotImplementedException();
+            _personService = personService;
+            _personConverter = personConverter;
+        }
+
+        [HttpGet("{personId}")]
+        public ActionResult<Person> GetPerson(int personId)
+        {
+            var person = _personService.GetPersonOrThrow404(personId);
+
+            return _personConverter.Convert(person);
         }
 
         [HttpPut("{id}/address")]
