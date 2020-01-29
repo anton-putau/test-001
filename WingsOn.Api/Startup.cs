@@ -27,7 +27,11 @@ namespace WingsOn.Api
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSingleton<PersonRepository>();
+            services.AddSingleton<FlightRepository>();
+            services.AddSingleton<BookingRepository>();
             services.AddSingleton<PersonService>();
+            services.AddSingleton<FlightService>();
+            services.AddSingleton<BookingService>();
             services.AddSingleton<IEntityConverter<Domain.Person, Contracts.Person>, PersonConverter>();
         }
 

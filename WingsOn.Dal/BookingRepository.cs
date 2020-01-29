@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using WingsOn.Domain;
@@ -68,6 +69,13 @@ namespace WingsOn.Dal
                     }
                 }
             });
+        }
+
+        public IReadOnlyList<Booking> GetBookingsForFlightNumber(string flightNumber)
+        {
+            return GetAll()
+                .Where(bk => bk.Flight.Number == flightNumber)
+                .ToList();
         }
     }
 }

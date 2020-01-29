@@ -11,7 +11,7 @@ namespace WingsOn.Api.Controllers
     {
 
         [HttpGet("passengers")]
-        public ActionResult<IEnumerable<Passenger>> Get(SearchPassengerQuery searchParams)
+        public ActionResult<IEnumerable<Person>> Get(SearchPassengerQuery searchParams)
         {
             throw new NotImplementedException();
         }
