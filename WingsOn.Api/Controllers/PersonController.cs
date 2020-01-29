@@ -30,10 +30,10 @@ namespace WingsOn.Api.Controllers
             return _personConverter.Convert(person);
         }
 
-        [HttpPut("{id}/address")]
-        public void UpdatePassengerAddress(int id, [FromBody] string newAddress)
+        [HttpPut("{personId}/address")]
+        public void UpdatePassengerAddress(int personId, [FromBody] Contracts.Person person)
         {
-            throw new NotImplementedException();
+            _personService.UpdatePersonAddress(personId, person.Address);
         }
     }
 }

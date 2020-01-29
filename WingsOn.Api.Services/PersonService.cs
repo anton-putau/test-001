@@ -24,5 +24,18 @@ namespace WingsOn.Api.Services
 
             return person;
         }
+
+        public Domain.Person UpdatePersonAddress(int personId, string address)
+        {
+            var person = GetPersonOrThrow404(personId);
+
+            PersonValidationRules.ValidateAddress(personId, address);
+
+            person.Address = address;
+
+            _personRepository.Save(person);
+
+            return person;
+        }
     }
 }

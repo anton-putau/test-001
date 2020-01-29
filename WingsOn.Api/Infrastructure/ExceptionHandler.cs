@@ -14,7 +14,8 @@ namespace WingsOn.Api.Infrastructure
 
         private static readonly Dictionary<Type, HttpStatusCode> _exceptionToCodeMap = new Dictionary<Type, HttpStatusCode>
         {
-            { typeof(NotFoundException), HttpStatusCode.NotFound }
+            { typeof(NotFoundException), HttpStatusCode.NotFound },
+            { typeof(ValidationException), HttpStatusCode.BadRequest }
         };
 
         public ExceptionHandler(RequestDelegate next)
