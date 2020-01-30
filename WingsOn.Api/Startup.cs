@@ -34,6 +34,7 @@ namespace WingsOn.Api
             services.AddSingleton<BookingService>();
             services.AddSingleton<SearchService>();
             services.AddSingleton<IEntityConverter<Domain.Person, Contracts.Person>, PersonConverter>();
+            services.AddSingleton<IEntityConverter<Domain.Booking, Contracts.Booking>, BookingConverter>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

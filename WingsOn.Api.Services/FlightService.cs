@@ -28,7 +28,7 @@ namespace WingsOn.Api.Services
             return bookings.SelectMany(bk => bk.Passengers).ToList();
         }
 
-        private Flight GetFlightByNumberOrThrow404(string flightNumber)
+        public Flight GetFlightByNumberOrThrow404(string flightNumber)
         {
             var flight = _flightRepository.GetByNumber(flightNumber);
 
