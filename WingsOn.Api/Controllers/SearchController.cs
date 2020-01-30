@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WingsOn.Api.Contracts;
 using WingsOn.Api.Contracts.Converters;
+using WingsOn.Api.Service.Contracts;
 using WingsOn.Api.Services;
 
 namespace WingsOn.Api.Controllers
@@ -26,9 +27,7 @@ namespace WingsOn.Api.Controllers
         [HttpGet("passengers/female")]
         public ActionResult<IEnumerable<Person>> GetFemalePassengers()
         {
-            var passengers = _searchService.GetPassengers(new SearchPassengerQuery(Domain.GenderType.Female));
-
-            return passengers.Select(_personConverter.Convert).ToList();
+            return _searchService.GetPassengers(new SearchPassengerQuery(Gender.Female)).ToList();
         }
     }
 }

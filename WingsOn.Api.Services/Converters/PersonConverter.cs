@@ -1,4 +1,6 @@
-﻿namespace WingsOn.Api.Contracts.Converters
+﻿using WingsOn.Api.Service.Contracts;
+
+namespace WingsOn.Api.Contracts.Converters
 {
     public class PersonConverter : IEntityConverter<Domain.Person, Contracts.Person>
     {
@@ -6,7 +8,7 @@
         {
             return new Contracts.Person
             {
-                Gender = domainEntity.Gender,
+                Gender = (Gender)(int)domainEntity.Gender,
                 Name = domainEntity.Name,
                 Email = domainEntity.Email,
                 Address = domainEntity.Address,

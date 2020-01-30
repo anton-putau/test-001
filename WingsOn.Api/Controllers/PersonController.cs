@@ -11,27 +11,21 @@ namespace WingsOn.Api.Controllers
     public class PersonController : ControllerBase
     {
         private readonly PersonService _personService;
-        private readonly IEntityConverter<Domain.Person, Contracts.Person> _personConverter;
-
-
+   
         public PersonController(
-            PersonService personService, 
-            IEntityConverter<Domain.Person, Contracts.Person> personConverter)
+            PersonService personService)
         {
             _personService = personService;
-            _personConverter = personConverter;
         }
 
         [HttpGet("{personId}")]
         public ActionResult<Person> GetPerson(int personId)
         {
-            var person = _personService.GetPersonOrThrow404(personId);
-
-            return _personConverter.Convert(person);
+            return _personService.GetPersonOrThrow404(personId);
         }
 
         [HttpPut("{personId}/address")]
-        public void UpdatePassengerAddress(int personId, [FromBody] Contracts.Person person)
+        public void UpdatePassengerAddress(int personId, [FromBody] Person person)
         {
             _personService.UpdatePersonAddress(personId, person.Address);
         }

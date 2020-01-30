@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WingsOn.Api.Contracts;
+using WingsOn.Api.Contracts.Converters;
 using WingsOn.Common.Exceptions;
 using WingsOn.Dal;
-using WingsOn.Domain;
 
 namespace WingsOn.Api.Services
 {
@@ -12,11 +13,16 @@ namespace WingsOn.Api.Services
     {
         private readonly FlightRepository _flightRepository;
         private readonly BookingRepository _bookingRepository;
+        private readonly IEntityConverter<Domain.Person, Person> _personConverter;
 
-        public FlightService(FlightRepository flightRepository, BookingRepository bookingRepository)
+        public FlightService(
+            FlightRepository flightRepository, 
+            BookingRepository bookingRepository,
+            IEntityConverter<Domain.Person, Person> personConverter)
         {
             _flightRepository = flightRepository;
             _bookingRepository = bookingRepository;
+            _personConverter = personConverter;
         }
 
         public IReadOnlyList<Person> GetFlightPassengersByNumber(string flightNumber)
@@ -25,10 +31,10 @@ namespace WingsOn.Api.Services
 
             var bookings = _bookingRepository.GetBookingsForFlightNumber(flightNumber);
 
-            return bookings.SelectMany(bk => bk.Passengers).ToList();
+            return bookings.SelectMany(bk => bk.Passengers).Select(_personConverter.Convert).ToList();
         }
 
-        public Flight GetFlightByNumberOrThrow404(string flightNumber)
+        internal Domain.Flight GetFlightByNumberOrThrow404(string flightNumber)
         {
             var flight = _flightRepository.GetByNumber(flightNumber);
 

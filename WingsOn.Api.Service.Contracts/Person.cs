@@ -1,5 +1,5 @@
 ﻿using System;
-using WingsOn.Domain;
+using WingsOn.Api.Service.Contracts;
 
 namespace WingsOn.Api.Contracts
 {
@@ -9,7 +9,7 @@ namespace WingsOn.Api.Contracts
 
         public DateTime DateBirth { get; set; }
 
-        public GenderType Gender { get; set; }
+        public Gender Gender { get; set; }
 
         public string Address { get; set; }
 

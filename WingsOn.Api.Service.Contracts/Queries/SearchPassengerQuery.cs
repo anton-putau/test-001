@@ -1,14 +1,14 @@
-﻿using WingsOn.Domain;
+﻿using WingsOn.Api.Service.Contracts;
 
 namespace WingsOn.Api.Contracts
 {
     public class SearchPassengerQuery
     {
-        public SearchPassengerQuery(GenderType gender)
+        public SearchPassengerQuery(Gender gender)
         {
             Gender = gender;
         }
 
-        public GenderType? Gender { get; }
+        public Gender? Gender { get; }
     }
 }

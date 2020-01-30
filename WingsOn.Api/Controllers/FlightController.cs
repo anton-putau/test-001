@@ -14,35 +14,25 @@ namespace WingsOn.Api.Controllers
     {
         private readonly FlightService _flightService;
         private readonly BookingService _bookingService;
-        private readonly IEntityConverter<Domain.Person, Person> _personConverter;
-        private readonly IEntityConverter<Domain.Booking, Booking> _bookingConverter;
-
+        
         public FlightController(
             FlightService flightService,
-            BookingService bookingService,
-            IEntityConverter<Domain.Person, Contracts.Person> personConverter,
-            IEntityConverter<Domain.Booking, Contracts.Booking> bookingConverter)
+            BookingService bookingService)
         {
             _flightService = flightService;
             _bookingService = bookingService;
-            _personConverter = personConverter;
-            _bookingConverter = bookingConverter;
         }
 
         [HttpGet("{flightNumber}/passengers")]
         public ActionResult<IEnumerable<Person>> GetFlightPassengers(string flightNumber)
         {
-            var passengers = _flightService.GetFlightPassengersByNumber(flightNumber);
-            
-            return passengers.Select(_personConverter.Convert).ToList();
+            return _flightService.GetFlightPassengersByNumber(flightNumber).ToList();
         }
 
         [HttpPost("{flightNumber}/book/{personId}")]
         public ActionResult<Booking> BookNewPassenger(string flightNumber, int personId)
         {
-            var booking = _bookingService.BookFlightForUser(flightNumber, personId);
-
-            return _bookingConverter.Convert(booking);
+            return _bookingService.BookFlightForUser(flightNumber, personId);
         }
     }
 }

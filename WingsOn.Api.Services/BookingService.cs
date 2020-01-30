@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WingsOn.Api.Contracts;
+using WingsOn.Api.Contracts.Converters;
 using WingsOn.Common.Exceptions;
 using WingsOn.Dal;
-using WingsOn.Domain;
 
 namespace WingsOn.Api.Services
 {
@@ -12,27 +13,30 @@ namespace WingsOn.Api.Services
         private readonly BookingRepository _bookingRepository;
         private readonly FlightService _flightService;
         private readonly PersonService _personService;
+        private readonly IEntityConverter<Domain.Booking, Booking> _bookingConverter;
 
         public BookingService(
             BookingRepository bookingRepository, 
             FlightService flightService,
-            PersonService personService)
+            PersonService personService,
+            IEntityConverter<Domain.Booking, Booking> bookingConverter)
         {
             _bookingRepository = bookingRepository;
             _flightService = flightService;
             _personService = personService;
+            _bookingConverter = bookingConverter;
         }
 
         public Booking BookFlightForUser(string flightNumber, int personId)
         {
             var flight = _flightService.GetFlightByNumberOrThrow404(flightNumber);
 
-            var newPassenger = _personService.GetPersonOrThrow404(personId);
+            var newPassenger = _personService.GetPersonOrThrow404Internal(personId);
 
             Random random = new Random();
             var id = random.Next(int.MinValue, int.MaxValue);
 
-            var booking = new Booking
+            var booking = new Domain.Booking
             {
                 Id = id,
                 Number = Guid.NewGuid().ToString(),
@@ -44,7 +48,7 @@ namespace WingsOn.Api.Services
 
             _bookingRepository.Save(booking);
 
-            return booking;
+            return _bookingConverter.Convert(booking);
 
         }
     }

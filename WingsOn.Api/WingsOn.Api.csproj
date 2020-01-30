@@ -15,9 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WingsOn.Api.Contracts\WingsOn.Api.Contracts.csproj" />
+    <ProjectReference Include="..\WingsOn.Api.Service.Contracts\WingsOn.Api.Service.Contracts.csproj" />
     <ProjectReference Include="..\WingsOn.Api.Services\WingsOn.Api.Services.csproj" />
-    <ProjectReference Include="..\WingsOn.Common\WingsOn.Common.csproj" />
     <ProjectReference Include="..\WingsOn.Dal\WingsOn.Dal.csproj" />
     <ProjectReference Include="..\WingsOn.Domain\WingsOn.Domain.csproj" />
   </ItemGroup>
