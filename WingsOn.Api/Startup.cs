@@ -32,6 +32,7 @@ namespace WingsOn.Api
             services.AddSingleton<PersonService>();
             services.AddSingleton<FlightService>();
             services.AddSingleton<BookingService>();
+            services.AddSingleton<SearchService>();
             services.AddSingleton<IEntityConverter<Domain.Person, Contracts.Person>, PersonConverter>();
         }
 

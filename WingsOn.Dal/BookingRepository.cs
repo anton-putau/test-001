@@ -74,8 +74,19 @@ namespace WingsOn.Dal
         public IReadOnlyList<Booking> GetBookingsForFlightNumber(string flightNumber)
         {
             return GetAll()
+                .AsQueryable()
                 .Where(bk => bk.Flight.Number == flightNumber)
                 .ToList();
+        }
+
+        public IReadOnlyList<Person> GetPassengersByFilter(Filter<Person> personFilter)
+        {
+            var passengers = 
+                GetAll()
+                .AsQueryable()
+                .SelectMany(bk => bk.Passengers);
+
+            return GetList(passengers, personFilter);
         }
     }
 }
